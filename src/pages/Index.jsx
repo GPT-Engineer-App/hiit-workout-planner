@@ -1,10 +1,26 @@
 import React, { useState } from "react";
-import { Box, Button, Checkbox, CheckboxGroup, Container, FormControl, FormLabel, Heading, Input, Stack, Text, VStack, Divider, List, ListItem, ListIcon } from "@chakra-ui/react";
+import { Box, Button, Checkbox, CheckboxGroup, Container, FormControl, FormLabel, Heading, Select, Stack, Text, VStack, Divider, List, ListItem, ListIcon } from "@chakra-ui/react";
 import { FaDumbbell, FaRunning, FaClock, FaCheckCircle } from "react-icons/fa";
 
 const workouts = {
-  noEquipment: ["Jumping Jacks", "Push-ups", "Burpees", "High Knees", "Mountain Climbers", "Plank", "Squats", "Lunges"],
-  withEquipment: ["Kettlebell Swings", "Dumbbell Snatches", "Barbell Squats", "Deadlifts", "Bench Press", "Pull-ups", "Dips", "Barbell Rows"],
+  noEquipment: [
+    { name: "Jumping Jacks", equipment: "None" },
+    { name: "Push-ups", equipment: "None" },
+    { name: "Burpees", equipment: "None" },
+    { name: "High Knees", equipment: "None" },
+    { name: "Mountain Climbers", equipment: "None" },
+    { name: "Plank", equipment: "None" },
+    { name: "Squats", equipment: "None" },
+    { name: "Lunges", equipment: "None" },
+  ],
+  withEquipment: [
+    { name: "Kettlebell Swings", equipment: "Kettlebell" },
+    { name: "Dumbbell Snatches", equipment: "Dumbbells" },
+    { name: "Deadlifts", equipment: "Dumbbells" },
+    { name: "Bench Press", equipment: "Dumbbells" },
+    { name: "Pull-ups", equipment: "Pull-up Bar" },
+    { name: "Dips", equipment: "Pull-up Bar" },
+  ],
 };
 
 const Index = () => {
@@ -22,15 +38,20 @@ const Index = () => {
   };
 
   const generateWorkout = () => {
-    const availableWorkouts = equipment.length > 0 ? workouts.withEquipment : workouts.noEquipment;
-    const workoutLength = availableWorkouts.length;
+    const workoutTypes = equipment.includes("Bodyweight Only") ? workouts.noEquipment : workouts.withEquipment;
+    const filteredWorkouts = workoutTypes.filter((w) => equipment.length === 0 || equipment.includes(w.equipment));
+    const roundTime = 2;
+    const rounds = Math.floor(workoutTime / (workoutTypes.length * roundTime));
     const routine = [];
-    const interval = Math.max(Math.floor(workoutTime / workoutLength), 1);
 
-    for (let i = 0; i < workoutLength; i++) {
-      routine.push({
-        name: availableWorkouts[i % workoutLength],
-        duration: interval,
+    for (let round = 0; round < rounds; round++) {
+      const shuffledExercises = [...filteredWorkouts].sort(() => 0.5 - Math.random());
+      shuffledExercises.forEach((exercise) => {
+        routine.push({
+          name: exercise,
+          duration: 0.5,
+          rest: 0.25,
+        });
       });
     }
 
@@ -49,7 +70,12 @@ const Index = () => {
               <Text>Workout Time (minutes):</Text>
             </Stack>
           </FormLabel>
-          <Input id="workout-time" type="number" value={workoutTime} onChange={handleTimeChange} />
+          <Select id="workout-time" placeholder="Select workout time" value={workoutTime} onChange={handleTimeChange}>
+            <option value="7">7 minutes - 2 rounds</option>
+            <option value="13">13 minutes - 4 rounds</option>
+            <option value="19">19 minutes - 6 rounds</option>
+            <option value="25">25 minutes - 8 rounds</option>
+          </Select>
         </FormControl>
 
         <FormControl>
@@ -59,17 +85,16 @@ const Index = () => {
               <Text>Equipment:</Text>
             </Stack>
           </FormLabel>
-          <CheckboxGroup value={equipment}>
-            <Stack direction="row">
+          <CheckboxGroup value={equipment} onChange={handleEquipmentChange}>
+            <Stack direction="column">
+              <Checkbox value="Bodyweight Only">Bodyweight Only</Checkbox>
               <Checkbox value="Dumbbells" onChange={handleEquipmentChange}>
                 Dumbbells
               </Checkbox>
               <Checkbox value="Kettlebell" onChange={handleEquipmentChange}>
                 Kettlebell
               </Checkbox>
-              <Checkbox value="Barbell" onChange={handleEquipmentChange}>
-                Barbell
-              </Checkbox>
+
               <Checkbox value="Pull-up Bar" onChange={handleEquipmentChange}>
                 Pull-up Bar
               </Checkbox>
