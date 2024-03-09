@@ -47,8 +47,9 @@ const Index = () => {
     for (let round = 0; round < rounds; round++) {
       const shuffledExercises = [...filteredWorkouts].sort(() => 0.5 - Math.random());
       shuffledExercises.forEach((exercise) => {
+        // Reset the routine array to ensure a fresh workout is generated
         routine.push({
-          name: exercise,
+          name: exercise.name,
           duration: 0.5,
           rest: 0.25,
         });
@@ -88,16 +89,10 @@ const Index = () => {
           <CheckboxGroup value={equipment} onChange={handleEquipmentChange}>
             <Stack direction="column">
               <Checkbox value="Bodyweight Only">Bodyweight Only</Checkbox>
-              <Checkbox value="Dumbbells" onChange={handleEquipmentChange}>
-                Dumbbells
-              </Checkbox>
-              <Checkbox value="Kettlebell" onChange={handleEquipmentChange}>
-                Kettlebell
-              </Checkbox>
+              <Checkbox value="Dumbbells">Dumbbells</Checkbox>
+              <Checkbox value="Kettlebell">Kettlebell</Checkbox>
 
-              <Checkbox value="Pull-up Bar" onChange={handleEquipmentChange}>
-                Pull-up Bar
-              </Checkbox>
+              <Checkbox value="Pull-up Bar">Pull-up Bar</Checkbox>
             </Stack>
           </CheckboxGroup>
         </FormControl>
