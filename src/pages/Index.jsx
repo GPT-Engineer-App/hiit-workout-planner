@@ -66,7 +66,6 @@ const Index = () => {
 
   return (
     <>
-      <Navigation />
       <Container maxW="container.md" py={10}>
         <VStack spacing={6}>
           <Heading>HIIT Workout Generator</Heading>

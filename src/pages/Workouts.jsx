@@ -3,7 +3,22 @@ import { Box, VStack, Heading, Table, Thead, Tbody, Tr, Th, Td, IconButton, Sele
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
 function Workouts() {
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState([
+    { name: "Jumping Jacks", equipment: "Bodyweight Only" },
+    { name: "Push-ups", equipment: "Bodyweight Only" },
+    { name: "Burpees", equipment: "Bodyweight Only" },
+    { name: "High Knees", equipment: "Bodyweight Only" },
+    { name: "Mountain Climbers", equipment: "Bodyweight Only" },
+    { name: "Plank", equipment: "Bodyweight Only" },
+    { name: "Squats", equipment: "Bodyweight Only" },
+    { name: "Lunges", equipment: "Bodyweight Only" },
+    { name: "Kettlebell Swings", equipment: "Kettlebell" },
+    { name: "Dumbbell Snatches", equipment: "Dumbbells" },
+    { name: "Deadlifts", equipment: "Dumbbells" },
+    { name: "Bench Press", equipment: "Dumbbells" },
+    { name: "Pull-ups", equipment: "Pull-up Bar" },
+    { name: "Dips", equipment: "Pull-up Bar" },
+  ]);
   const [newWorkout, setNewWorkout] = useState({ name: "", equipment: "" });
   const toast = useToast();
 
