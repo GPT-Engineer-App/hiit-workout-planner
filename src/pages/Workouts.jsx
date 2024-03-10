@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, VStack, Heading, Table, Thead, Tbody, Tr, Th, Td, IconButton, Select, Button, HStack, Input, useToast } from "@chakra-ui/react";
+import { Box, VStack, Heading, Table, Thead, Tbody, Tr, Th, Td, IconButton, Select, Button, Input, useToast } from "@chakra-ui/react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
 function Workouts() {
@@ -22,9 +22,27 @@ function Workouts() {
   const [newWorkout, setNewWorkout] = useState({ name: "", equipment: "" });
   const toast = useToast();
 
+  const [editingIndex, setEditingIndex] = useState(-1);
+  const [equipmentFilter, setEquipmentFilter] = useState("");
+
   const handleNewWorkoutChange = (e) => {
     const { name, value } = e.target;
-    setNewWorkout({ ...newWorkout, [name]: value });
+    if (editingIndex >= 0) {
+      const updatedWorkouts = [...workouts];
+      updatedWorkouts[editingIndex] = { ...updatedWorkouts[editingIndex], [name]: value };
+      setWorkouts(updatedWorkouts);
+    } else {
+      setNewWorkout({ ...newWorkout, [name]: value });
+    }
+  };
+
+  const handleEditClick = (index) => {
+    setEditingIndex(index);
+    setNewWorkout(workouts[index]);
+  };
+
+  const handleFilterChange = (event) => {
+    setEquipmentFilter(event.target.value);
   };
 
   const addWorkout = () => {
@@ -57,6 +75,29 @@ function Workouts() {
   return (
     <VStack>
       <Heading>Manage Workouts</Heading>
+      <Box as="form" onSubmit={(e) => e.preventDefault()}>
+        <VStack>
+          <Input placeholder="Workout Name" name="name" value={newWorkout.name} onChange={handleNewWorkoutChange} />
+          <Select placeholder="Select equipment" name="equipment" value={newWorkout.equipment} onChange={handleNewWorkoutChange}>
+            <option value="Bodyweight Only">Bodyweight Only</option>
+            <option value="Dumbbells">Dumbbells</option>
+            <option value="Kettlebell">Kettlebell</option>
+            <option value="Pull-up Bar">Pull-up Bar</option>
+            <option value="Box">Box</option>
+          </Select>
+          <Button leftIcon={<FaPlus />} onClick={addWorkout} colorScheme="blue">
+            Add Workout
+          </Button>
+        </VStack>
+      </Box>
+      <Select placeholder="Filter by equipment" onChange={handleFilterChange} value={equipmentFilter} mb="4">
+        <option value="">All Equipment</option>
+        <option value="Bodyweight Only">Bodyweight Only</option>
+        <option value="Dumbbells">Dumbbells</option>
+        <option value="Kettlebell">Kettlebell</option>
+        <option value="Pull-up Bar">Pull-up Bar</option>
+        <option value="Box">Box</option>
+      </Select>
       <Table w="full">
         <Thead>
           <Tr>
@@ -66,16 +107,18 @@ function Workouts() {
           </Tr>
         </Thead>
         <Tbody>
-          {workouts.map((workout, index) => (
-            <Tr key={index}>
-              <Td>{workout.name}</Td>
-              <Td>{workout.equipment}</Td>
-              <Td>
-                <IconButton icon={<FaEdit />} onClick={() => setNewWorkout(workouts[index])} aria-label="Edit workout" marginRight={2} />
-                <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" />
-              </Td>
-            </Tr>
-          ))}
+          {workouts
+            .filter((workout) => equipmentFilter === "" || workout.equipment === equipmentFilter)
+            .map((workout, index) => (
+              <Tr key={index}>
+                <Td>{workout.name}</Td>
+                <Td>{workout.equipment}</Td>
+                <Td>
+                  <IconButton icon={<FaEdit />} onClick={() => handleEditClick(index)} aria-label="Edit workout" marginRight={2} />
+                  <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" />
+                </Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
       <Box as="form" onSubmit={(e) => e.preventDefault()}>
