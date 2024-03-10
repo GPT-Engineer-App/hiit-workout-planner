@@ -38,9 +38,9 @@ const Index = () => {
   };
 
   const generateWorkout = () => {
-    const isBodyweightOnly = equipment.includes("Bodyweight Only");
+    const isBodyweightOnly = equipment.length === 0 || equipment.includes("Bodyweight Only");
     const workoutTypes = isBodyweightOnly ? workouts.noEquipment : workouts.withEquipment;
-    const filteredWorkouts = workoutTypes.filter((w) => isBodyweightOnly || equipment.includes(w.equipment));
+    const filteredWorkouts = workoutTypes;
     const roundTime = 2;
     const rounds = Math.floor(workoutTime / (workoutTypes.length * roundTime));
     const routine = [];
