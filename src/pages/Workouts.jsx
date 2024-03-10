@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, VStack, Heading, List, ListItem, ListIcon, IconButton, Input, Button, HStack, useToast } from "@chakra-ui/react";
+import { Box, VStack, Heading, Table, Thead, Tbody, Tr, Th, Td, IconButton, Select, Button, HStack, Input, useToast } from "@chakra-ui/react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
 function Workouts() {
@@ -42,23 +42,36 @@ function Workouts() {
   return (
     <VStack>
       <Heading>Manage Workouts</Heading>
-      <List w="full">
-        {workouts.map((workout, index) => (
-          <ListItem key={index} display="flex" justifyContent="space-between" alignItems="center">
-            <Box>
-              {workout.name} - {workout.equipment}
-            </Box>
-            <HStack>
-              <IconButton icon={<FaEdit />} onClick={() => setNewWorkout(workouts[index])} aria-label="Edit workout" />
-              <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" />
-            </HStack>
-          </ListItem>
-        ))}
-      </List>
+      <Table w="full">
+        <Thead>
+          <Tr>
+            <Th>Workout Name</Th>
+            <Th>Equipment</Th>
+            <Th>Actions</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {workouts.map((workout, index) => (
+            <Tr key={index}>
+              <Td>{workout.name}</Td>
+              <Td>{workout.equipment}</Td>
+              <Td>
+                <IconButton icon={<FaEdit />} onClick={() => setNewWorkout(workouts[index])} aria-label="Edit workout" />
+                <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" />
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
       <Box as="form" onSubmit={(e) => e.preventDefault()}>
         <VStack>
           <Input placeholder="Workout Name" name="name" value={newWorkout.name} onChange={handleNewWorkoutChange} />
-          <Input placeholder="Equipment" name="equipment" value={newWorkout.equipment} onChange={handleNewWorkoutChange} />
+          <Select placeholder="Select equipment" name="equipment" value={newWorkout.equipment} onChange={handleNewWorkoutChange}>
+            <option value="Bodyweight Only">Bodyweight Only</option>
+            <option value="Dumbbells">Dumbbells</option>
+            <option value="Kettlebell">Kettlebell</option>
+            <option value="Pull-up Bar">Pull-up Bar</option>
+          </Select>
           <Button leftIcon={<FaPlus />} onClick={addWorkout} colorScheme="blue">
             Add Workout
           </Button>
