@@ -86,7 +86,7 @@ const Index = () => {
               <Text>Equipment:</Text>
             </Stack>
           </FormLabel>
-          <CheckboxGroup value={equipment} onChange={handleEquipmentChange}>
+          <CheckboxGroup value={equipment} onChange={(values) => setEquipment(values)}>
             <Stack direction="column">
               <Checkbox value="Bodyweight Only">Bodyweight Only</Checkbox>
               <Checkbox value="Dumbbells">Dumbbells</Checkbox>
@@ -97,7 +97,7 @@ const Index = () => {
           </CheckboxGroup>
         </FormControl>
 
-        <Button colorScheme="blue" onClick={generateWorkout} leftIcon={<FaRunning />}>
+        <Button colorScheme="blue" onClick={() => generateWorkout()} leftIcon={<FaRunning />}>
           Generate Workout
         </Button>
 
