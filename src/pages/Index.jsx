@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navigation from "../components/Navigation";
 import { Box, Button, Checkbox, CheckboxGroup, Container, FormControl, FormLabel, Heading, Select, Stack, Text, VStack, Divider, List, ListItem, ListIcon } from "@chakra-ui/react";
 import { FaDumbbell, FaRunning, FaClock, FaCheckCircle } from "react-icons/fa";
 
@@ -64,63 +65,66 @@ const Index = () => {
   };
 
   return (
-    <Container maxW="container.md" py={10}>
-      <VStack spacing={6}>
-        <Heading>HIIT Workout Generator</Heading>
+    <>
+      <Navigation />
+      <Container maxW="container.md" py={10}>
+        <VStack spacing={6}>
+          <Heading>HIIT Workout Generator</Heading>
 
-        <FormControl>
-          <FormLabel htmlFor="workout-time">
-            <Stack direction="row" align="center">
-              <FaClock />
-              <Text>Workout Time (minutes):</Text>
-            </Stack>
-          </FormLabel>
-          <Select id="workout-time" placeholder="Select workout time" value={workoutTime} onChange={handleTimeChange}>
-            <option value="7">7 minutes - 2 rounds</option>
-            <option value="13">13 minutes - 4 rounds</option>
-            <option value="19">19 minutes - 6 rounds</option>
-            <option value="25">25 minutes - 8 rounds</option>
-          </Select>
-        </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="workout-time">
+              <Stack direction="row" align="center">
+                <FaClock />
+                <Text>Workout Time (minutes):</Text>
+              </Stack>
+            </FormLabel>
+            <Select id="workout-time" placeholder="Select workout time" value={workoutTime} onChange={handleTimeChange}>
+              <option value="7">7 minutes - 2 rounds</option>
+              <option value="13">13 minutes - 4 rounds</option>
+              <option value="19">19 minutes - 6 rounds</option>
+              <option value="25">25 minutes - 8 rounds</option>
+            </Select>
+          </FormControl>
 
-        <FormControl>
-          <FormLabel>
-            <Stack direction="row" align="center">
-              <FaDumbbell />
-              <Text>Equipment:</Text>
-            </Stack>
-          </FormLabel>
-          <CheckboxGroup value={equipment} onChange={(values) => setEquipment(values)}>
-            <Stack direction="column">
-              <Checkbox value="Bodyweight Only">Bodyweight Only</Checkbox>
-              <Checkbox value="Dumbbells">Dumbbells</Checkbox>
-              <Checkbox value="Kettlebell">Kettlebell</Checkbox>
+          <FormControl>
+            <FormLabel>
+              <Stack direction="row" align="center">
+                <FaDumbbell />
+                <Text>Equipment:</Text>
+              </Stack>
+            </FormLabel>
+            <CheckboxGroup value={equipment} onChange={(values) => setEquipment(values)}>
+              <Stack direction="column">
+                <Checkbox value="Bodyweight Only">Bodyweight Only</Checkbox>
+                <Checkbox value="Dumbbells">Dumbbells</Checkbox>
+                <Checkbox value="Kettlebell">Kettlebell</Checkbox>
 
-              <Checkbox value="Pull-up Bar">Pull-up Bar</Checkbox>
-            </Stack>
-          </CheckboxGroup>
-        </FormControl>
+                <Checkbox value="Pull-up Bar">Pull-up Bar</Checkbox>
+              </Stack>
+            </CheckboxGroup>
+          </FormControl>
 
-        <Button colorScheme="blue" onClick={() => generateWorkout()} leftIcon={<FaRunning />}>
-          Generate Workout
-        </Button>
+          <Button colorScheme="blue" onClick={() => generateWorkout()} leftIcon={<FaRunning />}>
+            Generate Workout
+          </Button>
 
-        {generatedWorkout.length > 0 && (
-          <>
-            <Divider />
-            <Heading size="md">Your Workout Routine:</Heading>
-            <List spacing={3}>
-              {generatedWorkout.map((exercise, index) => (
-                <ListItem key={index}>
-                  <ListIcon as={FaCheckCircle} color="green.500" />
-                  {exercise.name} - {exercise.duration} mins
-                </ListItem>
-              ))}
-            </List>
-          </>
-        )}
-      </VStack>
-    </Container>
+          {generatedWorkout.length > 0 && (
+            <>
+              <Divider />
+              <Heading size="md">Your Workout Routine:</Heading>
+              <List spacing={3}>
+                {generatedWorkout.map((exercise, index) => (
+                  <ListItem key={index}>
+                    <ListIcon as={FaCheckCircle} color="green.500" />
+                    {exercise.name} - {exercise.duration} mins
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
+        </VStack>
+      </Container>
+    </>
   );
 };
 
