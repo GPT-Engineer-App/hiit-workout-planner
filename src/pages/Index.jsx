@@ -21,6 +21,9 @@ const workouts = {
     { name: "Bench Press", equipment: "Dumbbells" },
     { name: "Pull-ups", equipment: "Pull-up Bar" },
     { name: "Dips", equipment: "Pull-up Bar" },
+    { name: "Box Jumps", equipment: "Box" },
+    { name: "Box Step-ups", equipment: "Box" },
+    { name: "Box Jump-overs", equipment: "Box" },
   ],
 };
 
@@ -99,6 +102,7 @@ const Index = () => {
                 <Checkbox value="Kettlebell">Kettlebell</Checkbox>
 
                 <Checkbox value="Pull-up Bar">Pull-up Bar</Checkbox>
+                <Checkbox value="Box">Box</Checkbox>
               </Stack>
             </CheckboxGroup>
           </FormControl>
