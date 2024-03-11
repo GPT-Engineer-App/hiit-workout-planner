@@ -56,8 +56,8 @@ function Workouts() {
       });
       return;
     }
-    const workoutWithId = { ...newWorkout, id: Date.now() };
-    setWorkouts([...workouts, workoutWithId]);
+    const workoutWithId = { ...newWorkout, id: new Date().getTime() };
+    setWorkouts((prevWorkouts) => [...prevWorkouts, workoutWithId]);
     setNewWorkout({ name: "", equipment: "" });
   };
 
@@ -69,7 +69,7 @@ function Workouts() {
   };
 
   const deleteWorkout = (index) => {
-    const updatedWorkouts = workouts.filter((_, i) => i !== index);
+    const updatedWorkouts = workouts.filter((workout) => workout.id !== workouts[index].id);
     setWorkouts(updatedWorkouts);
   };
 
@@ -111,7 +111,7 @@ function Workouts() {
           {workouts
             .filter((workout) => equipmentFilter === "" || workout.equipment === equipmentFilter)
             .map((workout, index) => (
-              <Tr key={workout.id || workout.name}>
+              <Tr key={workout.id}>
                 <Td>{workout.name}</Td>
                 <Td>{workout.equipment}</Td>
                 <Td>
