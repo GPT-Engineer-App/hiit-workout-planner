@@ -115,7 +115,7 @@ function Workouts() {
                 <Td>{workout.equipment}</Td>
                 <Td>
                   <IconButton icon={<FaEdit />} onClick={() => handleEditClick(index)} aria-label="Edit workout" marginRight={2} />
-                  <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" />
+                  <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" isRound />
                 </Td>
               </Tr>
             ))}
