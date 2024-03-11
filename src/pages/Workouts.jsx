@@ -56,7 +56,8 @@ function Workouts() {
       });
       return;
     }
-    setWorkouts([...workouts, newWorkout]);
+    const workoutWithId = { ...newWorkout, id: Date.now() };
+    setWorkouts([...workouts, workoutWithId]);
     setNewWorkout({ name: "", equipment: "" });
   };
 
@@ -110,31 +111,18 @@ function Workouts() {
           {workouts
             .filter((workout) => equipmentFilter === "" || workout.equipment === equipmentFilter)
             .map((workout, index) => (
-              <Tr key={index}>
+              <Tr key={workout.id || workout.name}>
                 <Td>{workout.name}</Td>
                 <Td>{workout.equipment}</Td>
                 <Td>
                   <IconButton icon={<FaEdit />} onClick={() => handleEditClick(index)} aria-label="Edit workout" marginRight={2} />
-                  <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" isRound />
+                  <IconButton icon={<FaTrash />} onClick={() => deleteWorkout(index)} aria-label="Delete workout" colorScheme="red" />
                 </Td>
               </Tr>
             ))}
         </Tbody>
       </Table>
-      <Box as="form" onSubmit={(e) => e.preventDefault()}>
-        <VStack>
-          <Input placeholder="Workout Name" name="name" value={newWorkout.name} onChange={handleNewWorkoutChange} />
-          <Select placeholder="Select equipment" name="equipment" value={newWorkout.equipment} onChange={handleNewWorkoutChange}>
-            <option value="Bodyweight Only">Bodyweight Only</option>
-            <option value="Dumbbells">Dumbbells</option>
-            <option value="Kettlebell">Kettlebell</option>
-            <option value="Pull-up Bar">Pull-up Bar</option>
-          </Select>
-          <Button leftIcon={<FaPlus />} onClick={addWorkout} colorScheme="blue">
-            Add Workout
-          </Button>
-        </VStack>
-      </Box>
+      // This form has been removed as per the update request
     </VStack>
   );
 }
