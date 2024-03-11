@@ -42,26 +42,22 @@ const Index = () => {
   };
 
   const generateWorkout = () => {
-    const isBodyweightOnly = equipment.includes("Bodyweight Only");
-    const workoutTypes = isBodyweightOnly ? workouts.noEquipment : workouts.withEquipment.filter((exercise) => equipment.includes(exercise.equipment) || isBodyweightOnly);
+    const isBodyweightOnly = equipment.length === 0 || equipment.includes("Bodyweight Only");
+    const workoutTypes = isBodyweightOnly ? workouts.noEquipment : workouts.withEquipment.filter((exercise) => equipment.includes(exercise.equipment));
     const filteredWorkouts = workoutTypes.length > 0 ? workoutTypes : workouts.noEquipment;
     const roundTime = 2;
-    const rounds = Math.floor(workoutTime / (workoutTypes.length * roundTime));
+    const rounds = Math.floor(workoutTime / (filteredWorkouts.length * roundTime));
     const routine = [];
 
     for (let round = 0; round < rounds; round++) {
       const shuffledExercises = [...filteredWorkouts].sort(() => 0.5 - Math.random());
-      if (filteredWorkouts.length > 0) {
-        shuffledExercises.forEach((exercise) => {
-          if (isBodyweightOnly || equipment.includes(exercise.equipment)) {
-            routine.push({
-              name: exercise.name,
-              duration: 0.5,
-              rest: 0.25,
-            });
-          }
+      shuffledExercises.forEach((exercise) => {
+        routine.push({
+          name: exercise.name,
+          duration: 0.5,
+          rest: 0.25,
         });
-      }
+      });
     }
 
     setGeneratedWorkout(routine);
