@@ -42,7 +42,7 @@ const Index = () => {
   };
 
   const generateWorkout = () => {
-    const isBodyweightOnly = equipment.length === 0 || equipment.includes("Bodyweight Only");
+    const isBodyweightOnly = equipment.length === 0 || (equipment.length === 1 && equipment[0] === "Bodyweight Only");
     const workoutTypes = isBodyweightOnly ? workouts.noEquipment : workouts.withEquipment.filter((exercise) => equipment.includes(exercise.equipment));
     const filteredWorkouts = workoutTypes.length > 0 ? workoutTypes : workouts.noEquipment;
     const roundTime = 2;
