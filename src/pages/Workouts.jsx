@@ -102,21 +102,6 @@ function Workouts() {
             <option value="Box">Box</option>
           </Select>
         </Box>
-        <Box w={{ base: "100%", md: "40%" }}>
-          <VStack>
-            <Input placeholder="Workout Name" name="name" value={newWorkout.name} onChange={handleNewWorkoutChange} />
-            <Select placeholder="Select equipment" name="equipment" value={newWorkout.equipment} onChange={handleNewWorkoutChange}>
-              <option value="Bodyweight Only">Bodyweight Only</option>
-              <option value="Dumbbells">Dumbbells</option>
-              <option value="Kettlebell">Kettlebell</option>
-              <option value="Pull-up Bar">Pull-up Bar</option>
-              <option value="Box">Box</option>
-            </Select>
-            <Button leftIcon={<FaPlus />} onClick={addWorkout} colorScheme="blue">
-              Add Workout
-            </Button>
-          </VStack>
-        </Box>
       </Flex>
       <Table w="full">
         <Thead>
